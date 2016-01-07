@@ -5,8 +5,11 @@ open FSharp.Control
 open Json
 open Plugin
 open WebSocket
+open FSharp.Data;
 
-let plugins : list<Plugin> = [Woop.woop]
+
+let plugins : list<Plugin> = [Woop.woop; Airline.airline]
+
 
 // authenticate to the slack api, and receive a payload of connection info
 let authenticate apiToken =

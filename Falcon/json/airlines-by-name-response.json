@@ -1,0 +1,120 @@
+{
+  "head" : {
+    "vars" : [ "code", "name", "hubAirportCode" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "code" : {
+        "type" : "literal",
+        "value" : "QF"
+      },
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "ADL"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas"
+      }
+    }, {
+      "code" : {
+        "type" : "literal",
+        "value" : "QF"
+      },
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "SYD"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas"
+      }
+    }, {
+      "code" : {
+        "type" : "literal",
+        "value" : "QF"
+      },
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "SYD"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas Freight"
+      }
+    }, {
+      "code" : {
+        "type" : "literal",
+        "value" : "QF"
+      },
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "SIN"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas"
+      }
+    }, {
+      "code" : {
+        "type" : "literal",
+        "value" : "QF"
+      },
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "BNE"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas"
+      }
+    }, {
+      "code" : {
+        "type" : "literal",
+        "value" : "QF"
+      },
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "PER"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas"
+      }
+    }, {
+      "code" : {
+        "type" : "literal",
+        "value" : "QF"
+      },
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "DXB"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas"
+      }
+    }, {
+      "code" : {
+        "type" : "literal",
+        "value" : "QF"
+      },
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "MEL"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas"
+      }
+    } ]
+  }
+}

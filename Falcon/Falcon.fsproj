@@ -57,26 +57,36 @@
     <None Include="App.config" />
     <Content Include="packages.config" />
     <Compile Include="AssemblyInfo.fs" />
+    <Content Include="sparql\airlines-by-code-request.sparql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="sparql\airlines-by-name-request.sparql">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Compile Include="json\Json.fs" />
-    <None Include="json\incoming-message.json" />
+    <None Include="json\airlines-by-code-response.json" />
+    <None Include="json\airlines-by-name-response.json" />
     <None Include="json\outgoing-message.json" />
     <None Include="json\hello.json" />
     <None Include="json\presence_change.json" />
     <None Include="json\rtm.start.error.json" />
     <None Include="json\rtm.start.json" />
     <None Include="json\user_typing.json" />
+    <None Include="json\incoming-message.json" />
+    <Compile Include="lib\Wikidata.fs" />
     <Compile Include="plugins\Plugin.fs" />
     <Compile Include="plugins\Woop.fs" />
+    <Compile Include="plugins\Airline.fs" />
     <Compile Include="WebSocket.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="FSharp.Configuration">
-      <HintPath>..\packages\FSharp.Configuration.0.5.3\lib\net40\FSharp.Configuration.dll</HintPath>
+      <HintPath>..\packages\FSharp.Configuration.0.5.9\lib\net40\FSharp.Configuration.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharp.Control.AsyncSeq">
-      <HintPath>..\packages\FSharp.Control.AsyncSeq.2.0.2\lib\net45\FSharp.Control.AsyncSeq.dll</HintPath>
+      <HintPath>..\packages\FSharp.Control.AsyncSeq.2.0.3\lib\net45\FSharp.Control.AsyncSeq.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="FSharp.Data">
@@ -84,16 +94,14 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="mscorlib" />
-    <Reference Include="FSharp.Core, Version=$(TargetFSharpCoreVersion), Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a">
-      <Private>True</Private>
-    </Reference>
     <Reference Include="SharpYaml">
-      <HintPath>..\packages\FSharp.Configuration.0.5.3\lib\net40\SharpYaml.dll</HintPath>
+      <HintPath>..\packages\FSharp.Configuration.0.5.9\lib\net40\SharpYaml.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Numerics" />
+    <Reference Include="System.Runtime.Caching" />
     <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

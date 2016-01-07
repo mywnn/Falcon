@@ -1,0 +1,118 @@
+{
+  "head" : {
+    "vars" : [ "name", "hubAirportCode" ]
+  },
+  "results" : {
+    "bindings" : [ {
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "ADL"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas"
+      }
+    }, {
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "SYD"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas"
+      }
+    }, {
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "SYD"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Eastern Australia Airlines"
+      }
+    }, {
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "SYD"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas Freight"
+      }
+    }, {
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "SIN"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas"
+      }
+    }, {
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "BNE"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas"
+      }
+    }, {
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "BNE"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Sunstate Airlines"
+      }
+    }, {
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "PER"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas"
+      }
+    }, {
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "DXB"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas"
+      }
+    }, {
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "CNS"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Sunstate Airlines"
+      }
+    }, {
+      "hubAirportCode" : {
+        "type" : "literal",
+        "value" : "MEL"
+      },
+      "name" : {
+        "xml:lang" : "en",
+        "type" : "literal",
+        "value" : "Qantas"
+      }
+    } ]
+  }
+}
