@@ -3,29 +3,39 @@
 open Plugin
 open Json
 
-let private formatAirline (airline : string) (hubs : seq<string>) : string =
-    let hubCodes = hubs |> String.concat ", "
-    sprintf "%s (Hubs: %s)" airline hubCodes
+/// format airline json responses. Since type providers are used that return identical, but unrelated object hierarchies, we need structural typing
+module AirlineFormat =
+    let inline private getName binding : string =
+        let code = (^t: (member Name: 'u) binding)
+        let value = (^u: (member Value: string) code)
+        value
+
+    let inline private getHub binding : string =
+        let code = (^t: (member HubAirportCode: 'u) binding)
+        let value = (^u: (member Value: string) code)
+        value
+
+    let inline private formatAirline (airlineName : string, hubs) : string =
+        let hubCodes = hubs |> Seq.map getHub |> String.concat ", "
+        sprintf "%s (Hubs: %s)" airlineName hubCodes
+
+    let inline format bindings : string =
+        bindings
+            |> Seq.groupBy getName
+            |> Seq.map formatAirline
+            |> String.concat "; "
 
 let private findAirlineByCode airlineIataCode : string option =
     let response = Wikidata.query "sparql/airlines-by-code-request.sparql" (Map.ofList ["{{airline_code}}", airlineIataCode])
     match AirlineByCodeResponse.Parse(response).Results.Bindings with
         | [||] -> Option.None
-        | bindings -> bindings
-                        |> Seq.groupBy (fun binding -> binding.Name.Value)
-                        |> Seq.map (fun (airline, hubs) -> formatAirline airline (hubs |> Seq.map (fun hub -> hub.HubAirportCode.Value)))
-                        |> String.concat "; "
-                        |> Option.Some
+        | bindings -> Some (AirlineFormat.format bindings)
 
 let private findAirlineByName airlineName : string option =
     let response = Wikidata.query "sparql/airlines-by-name-request.sparql" (Map.ofList ["{{airline_name}}", airlineName])
     match AirlineByNameResponse.Parse(response).Results.Bindings with
     | [||] -> Option.None
-    | bindings -> bindings
-                    |> Seq.groupBy (fun binding -> binding.Name.Value)
-                    |> Seq.map (fun (airline, hubs) -> formatAirline airline (hubs |> Seq.map (fun hub -> hub.HubAirportCode.Value)))
-                    |> String.concat "; "
-                    |> Option.Some
+    | bindings -> Some (AirlineFormat.format bindings)
 
 let airline : Plugin = fun msg state ->
     match msg with
