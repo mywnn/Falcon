@@ -5,7 +5,7 @@ open FSharp.Control
 open Json
 open Plugin
 open WebSocket
-open FSharp.Data;
+open FSharp.Data
 
 
 let plugins : list<Plugin> = [Woop.woop; Airline.airline]
@@ -35,24 +35,31 @@ let extractResponseType (messageJson : string) : string option =
         | [| "{"; "ok"; "true"; _ |] -> Some "ack"
         | _ -> None
 
+let handleNonMessage (responseType : string option, messageJson: string) =
+    match responseType with
+    | Some "hello" | Some "ack" -> ()
+    | Some unknown ->
+        printf "haven't learned %s\n" unknown
+    | None -> 
+        File.WriteAllText(Guid.NewGuid().ToString(), messageJson)
+        printf "parsing failure!\n"
 /// given the bot's existing state and a new message from slack, react to the message and optionally update the state
-let generateNewState (state : State) (messageJson : string) : State =
-    printf "received %s\n" messageJson
-    match extractResponseType messageJson with
+let getActions (messageJson : string) =
+    state {
+        let! currentState = State.get()
+        printf "received %s\n" messageJson
+        let responseType = extractResponseType messageJson
+        match responseType with
         | Some "message" -> 
             let message = IncomingMessage.Parse(messageJson)
-            plugins
-                 |> Seq.fold (fun state plugin -> plugin message state) state
-        | Some "hello" 
-        | Some "ack" -> 
-            state
-        | Some unknown -> 
-            printf "haven't learned %s\n" unknown
-            state
-        | None -> 
-            File.WriteAllText(Guid.NewGuid().ToString(), messageJson)
-            printf "parsing failure!\n"
-            state
+            let! actions = plugins |> Seq.map(fun plugin -> plugin message) |> seqStateToStateSeq
+            let actions = actions |> Seq.collect(fun x -> x) |> Seq.toList
+            do! State.set { currentState with Responses = List.append (currentState.Responses) actions }
+            return actions
+        | _ -> 
+            handleNonMessage(responseType, messageJson)
+            return List.empty
+    }
 
 let botActionToWebSocketCommand response = 
     match response with
@@ -62,14 +69,12 @@ let botActionToWebSocketCommand response =
             WebSocketCommand.Message(jsonResponse)
 
 /// take any actions the bot wants to take (e.g. queued messages) and send them to the websocket
-let sendStateToWebSocket ws state  = 
-    let commands = state.Responses |> Seq.map botActionToWebSocketCommand
+let sendStateToWebSocket ws actionList =
     async {
+        let commands = actionList |> Seq.map botActionToWebSocketCommand
         for command in commands do
             do! WebSocket.send ws command
-        return {state with Responses = []}
     }
-
 type Settings = AppSettings<"App.config">
 [<EntryPoint>]
 let main argv = 
@@ -78,9 +83,13 @@ let main argv =
     let ws = WebSocket.create()
     // fold over the messages from the websocket connection, threading the bot's state through each successive call
     WebSocket.read ws remoteState.Url
-        |> AsyncSeq.foldAsync 
-                (fun state msg -> generateNewState state msg |> sendStateToWebSocket ws) 
-                initialState
+        |> AsyncSeq.foldAsync(fun state msg -> 
+            async {
+                let actions, state = getActions msg state
+                do! sendStateToWebSocket ws actions
+                return state
+            }
+        ) initialState
         |> Async.RunSynchronously
         |> ignore
     printf "done"

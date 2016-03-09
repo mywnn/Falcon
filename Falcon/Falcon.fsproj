@@ -54,9 +54,12 @@
   </Choose>
   <Import Project="$(FSharpTargetsPath)" />
   <ItemGroup>
-    <None Include="App.config" />
+    <Content Include="App.config" />
     <Content Include="packages.config" />
     <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Monad.fs" />
+    <Compile Include="NatTrans.fsi" />
+    <Compile Include="NatTrans.fs" />
     <Content Include="sparql\airlines-by-code-request.sparql">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>

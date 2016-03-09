@@ -37,18 +37,20 @@ let private findAirlineByName airlineName : string option =
     | [||] -> Option.None
     | bindings -> Some (AirlineFormat.format bindings)
 
-let airline : Plugin = fun msg state ->
-    match msg with
-    | Regex "airline ([a-zA-Z0-9]{2})$" [airlineIataCode] -> 
-        let airline = findAirlineByCode airlineIataCode
-        let answer = match airline with
-                        | None -> "I couldn't find an airline by that code."
-                        | Some a -> a
-        reply state msg answer
-    | Regex "airline (.{3,})$" [airlineName] -> 
-        let airline = findAirlineByName airlineName
-        let answer = match airline with
-                        | None -> "I couldn't find an airline matching that name."
-                        | Some a -> a
-        reply state msg answer
-    | _ -> state
+let airline : Plugin = fun msg ->
+    state {
+        match msg with
+        | Regex "airline ([a-zA-Z0-9]{2})$" [airlineIataCode] -> 
+            let airline = findAirlineByCode airlineIataCode
+            let answer = match airline with
+                            | None -> "I couldn't find an airline by that code."
+                            | Some a -> a
+            return reply msg answer
+        | Regex "airline (.{3,})$" [airlineName] -> 
+            let airline = findAirlineByName airlineName
+            let answer = match airline with
+                            | None -> "I couldn't find an airline matching that name."
+                            | Some a -> a
+            return reply msg answer
+        | _ -> return List.empty
+    }

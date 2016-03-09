@@ -19,7 +19,7 @@ type State = {
 }
 
 // a plugin takes an incoming message and an existing bot state. Produces a new state.
-type Plugin = IncomingMessage.Root -> State -> State
+type Plugin = IncomingMessage.Root -> State<BotAction list, State>
 
 /// regex active pattern
 let (|Regex|_|) (pattern:string) (input:IncomingMessage.Root) =
@@ -29,10 +29,5 @@ let (|Regex|_|) (pattern:string) (input:IncomingMessage.Root) =
     else 
         None
 
-/// returns a new state that will send the provided text to the provided channel
-let say state channel text =
-    {state with Responses = BotAction.Say(channel, text) :: state.Responses}
-
 /// returns a new state that will reply to the provided message
-let reply state (message : IncomingMessage.Root) text =
-    say state message.Channel text
+let reply (message : IncomingMessage.Root) text = [ BotAction.Say(message.Channel, text) ]
